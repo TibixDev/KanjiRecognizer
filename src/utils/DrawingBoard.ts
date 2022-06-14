@@ -86,13 +86,14 @@ export default class DrawingBoard {
     }
 
     touchToCanvasPos(touch: TouchEvent | MouseEvent) {
+        console.log("I am here")
         let x, y;
-        if (touch instanceof TouchEvent) {
-            x = touch.touches[0].clientX;
-            y = touch.touches[0].clientY;
-        } else {
+        if (touch instanceof MouseEvent) {
             x = touch.clientX;
             y = touch.clientY;
+        } else {
+            x = touch.touches[0].clientX;
+            y = touch.touches[0].clientY;
         }
         //console.log(this.canvas.offsetLeft, this.canvas.offsetTop)
         const rect = this.canvas.getBoundingClientRect();
