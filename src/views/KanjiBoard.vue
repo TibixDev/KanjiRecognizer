@@ -110,6 +110,7 @@ function undo() {
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
+    width: 75%;
 }
 
 .line {

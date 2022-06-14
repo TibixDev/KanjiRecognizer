@@ -94,11 +94,10 @@ export default class DrawingBoard {
             x = touch.touches[0].clientX;
             y = touch.touches[0].clientY;
         }
-        //console.log(this.canvas.offsetLeft, this.canvas.offsetTop)
         const rect = this.canvas.getBoundingClientRect();
-        //const pos = [x - this.canvas.offsetLeft, y - this.canvas.offsetTop];
-        const pos = [x - rect.left, y - rect.top];
-        //console.log(pos);
+        const cw = this.canvas.clientWidth;
+        const ch = this.canvas.clientHeight;
+        const pos = [(x - rect.left) * (this.canvas.width / cw), (y - rect.top) * (this.canvas.width / ch)];
         return pos;
     }
 
