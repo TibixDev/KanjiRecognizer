@@ -6,6 +6,8 @@ export default class DrawingBoard {
     brushWidth: number = 1
     readonly bgStyle: string = 'rgb(0,0,0)'
     readonly minDistance = 1
+    history: ImageData[] = []
+    historyMaxLen = 20
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
@@ -14,13 +16,14 @@ export default class DrawingBoard {
             throw new Error('Canvas not supported');
         }
         this.pen = new Pen(this.ctx.canvas.width * 0.01, this.ctx.canvas.height * 0.01);
-        this.clear();
+        this.reset();
     }
 
-    clear() {
+    reset() {
         this.pen.reset();
         this.ctx!.fillStyle = 'rgb(0,0,0)';
         this.ctx!.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.history = [];
     }
 
     startMove(touch: TouchEvent | MouseEvent) {
@@ -30,6 +33,10 @@ export default class DrawingBoard {
             //this.pen.id = touch.identifier
             this.pen.x = this.touchToCanvasPos(touch)[0]
             this.pen.y = this.touchToCanvasPos(touch)[1]
+        }
+        this.history.push(this.ctx!.getImageData(0, 0, this.canvas.width, this.canvas.height))
+        if (this.history.length > this.historyMaxLen) {
+            this.history.shift()
         }
     }
 
@@ -93,6 +100,12 @@ export default class DrawingBoard {
         const pos = [x - rect.left, y - rect.top];
         //console.log(pos);
         return pos;
+    }
+
+    undo() {
+        if (this.history.length > 0) {
+            this.ctx!.putImageData(this.history.pop()!, 0, 0)
+        }
     }
 }
 
