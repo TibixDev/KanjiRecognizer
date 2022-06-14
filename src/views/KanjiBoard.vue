@@ -5,7 +5,7 @@
                 height="512"
                 width="512"
                 ref="board"
-                class="board mx-2"
+                class="board mx-2 pixel-rendering"
                 @mousedown="startMove"
                 @mousemove="move"
                 @mouseup="endMove"
@@ -16,7 +16,7 @@
             >
             </canvas>
             <div class="py-2"></div>
-            <canvas style="width: 30%" ref="smallBoard" class="border-2 border-indigo-300 mx-auto" width="64" height="64"></canvas>
+            <canvas style="width: 30%" ref="smallBoard" class="border-2 border-indigo-300 mx-auto pixel-rendering hidden" width="64" height="64"></canvas>
             <div class="flex flex-row gap-3 justify-center">
                 <button @click="drawingBoard!.reset(); predictions = []" class="bg-purple-500 rounded-sm px-3 py-1 text-white">Reset</button>
                 <button
@@ -107,13 +107,15 @@ function undo() {
 .board {
     background-color: #fff;
     margin: 0 auto;
+    width: 75%;
+}
+
+.pixel-rendering {
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
-    width: 75%;
 }
-
 .line {
     background-color: blue;
 }

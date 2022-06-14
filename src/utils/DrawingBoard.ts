@@ -15,7 +15,7 @@ export default class DrawingBoard {
         if (!this.ctx) {
             throw new Error('Canvas not supported');
         }
-        this.pen = new Pen(this.ctx.canvas.width * 0.01, this.ctx.canvas.height * 0.01);
+        this.pen = new Pen(this.canvas.width / 64, this.canvas.width / 64);
         this.reset();
     }
 
@@ -65,7 +65,7 @@ export default class DrawingBoard {
             for (let i = 0; i < step; i++) {
                 this.ctx!.fillStyle = this.brushStyle;
                 this.ctx!.beginPath()
-                this.ctx!.arc(x, y, this.pen.radius + 2, 0, Math.PI * 2, false)
+                this.ctx!.arc(x, y, this.pen.radius, 0, Math.PI * 2, false)
                 this.ctx!.fill()
 
                 x += deltaX
