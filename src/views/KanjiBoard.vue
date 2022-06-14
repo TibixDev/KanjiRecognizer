@@ -12,6 +12,7 @@
                 @touchstart="startMove"
                 @touchmove="move"
                 @touchend="endMove"
+                @mouseleave="endMove"
             >
             </canvas>
             <div class="py-2"></div>
@@ -80,7 +81,7 @@ function move(touch: TouchEvent | MouseEvent) {
 
 function endMove(touch: TouchEvent | MouseEvent) {
     touch.preventDefault();
-    drawingBoard.value!.endMove(touch);
+    drawingBoard.value!.endMove();
     predict();
 }
 

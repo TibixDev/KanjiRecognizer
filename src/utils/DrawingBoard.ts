@@ -76,7 +76,7 @@ export default class DrawingBoard {
         }
     }
 
-    endMove(touch: TouchEvent | MouseEvent) {
+    endMove() {
         console.log("Ended")
         if (this.pen.isDown) {
             this.pen.isDown = false
