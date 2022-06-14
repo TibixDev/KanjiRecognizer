@@ -69,18 +69,22 @@ function resize64(orig: HTMLCanvasElement, dest: HTMLCanvasElement) {
     destCtx!.drawImage(orig, 0, 0, 64, 64);
 }
 
-function startMove(touch: TouchEvent | MouseEvent) {
-    touch.preventDefault();
-    drawingBoard.value!.startMove(touch);
+function startMove(event: TouchEvent | MouseEvent) {
+    event.preventDefault();
+    drawingBoard.value!.startMove(event);
 }
 
-function move(touch: TouchEvent | MouseEvent) {
-    touch.preventDefault();
-    drawingBoard.value!.move(touch);
+function move(event: TouchEvent | MouseEvent) {
+    event.preventDefault();
+    drawingBoard.value!.move(event);
 }
 
-function endMove(touch: TouchEvent | MouseEvent) {
-    touch.preventDefault();
+function endMove(event: TouchEvent | MouseEvent) {
+    // If it's a mouse leave event and the board was reset
+    if (event.type === "mouseleave" && drawingBoard.value!.history.length === 0) {
+        return;
+    }
+    event.preventDefault();
     drawingBoard.value!.endMove();
     predict();
 }

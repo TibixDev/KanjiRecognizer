@@ -26,13 +26,12 @@ export default class DrawingBoard {
         this.history = [];
     }
 
-    startMove(touch: TouchEvent | MouseEvent) {
-        console.log("Started", touch)
+    startMove(event: TouchEvent | MouseEvent) {
+        console.log("Started", event)
         if (!this.pen.isDown) {
             this.pen.isDown = true
-            //this.pen.id = touch.identifier
-            this.pen.x = this.touchToCanvasPos(touch)[0]
-            this.pen.y = this.touchToCanvasPos(touch)[1]
+            this.pen.x = this.touchToCanvasPos(event)[0]
+            this.pen.y = this.touchToCanvasPos(event)[1]
         }
         this.history.push(this.ctx!.getImageData(0, 0, this.canvas.width, this.canvas.height))
         if (this.history.length > this.historyMaxLen) {
@@ -40,21 +39,21 @@ export default class DrawingBoard {
         }
     }
 
-    move(touch: TouchEvent | MouseEvent) {
+    move(event: TouchEvent | MouseEvent) {
         //console.log("Moving", touch)
         if (!this.pen.isDown) {
             return;
         }
         if (this.pen.x == null || this.pen.y == null) {
-            this.pen.x = this.touchToCanvasPos(touch)[0]
-            this.pen.y = this.touchToCanvasPos(touch)[1]
+            this.pen.x = this.touchToCanvasPos(event)[0]
+            this.pen.y = this.touchToCanvasPos(event)[1]
         } else {
             let x = this.pen.x
             let y = this.pen.y
 
             //console.log(`${x} ${y}`)
-            let dX = (this.touchToCanvasPos(touch)[0]) - x;
-            let dY = (this.touchToCanvasPos(touch)[1]) - y;
+            let dX = (this.touchToCanvasPos(event)[0]) - x;
+            let dY = (this.touchToCanvasPos(event)[1]) - y;
 
             let distance = Math.sqrt(dX ** 2 + dY ** 2)
 
@@ -71,8 +70,8 @@ export default class DrawingBoard {
                 x += deltaX
                 y += deltaY
             }
-            this.pen.x = this.touchToCanvasPos(touch)[0]
-            this.pen.y = this.touchToCanvasPos(touch)[1]
+            this.pen.x = this.touchToCanvasPos(event)[0]
+            this.pen.y = this.touchToCanvasPos(event)[1]
         }
     }
 
@@ -85,14 +84,14 @@ export default class DrawingBoard {
         }
     }
 
-    touchToCanvasPos(touch: TouchEvent | MouseEvent) {
+    touchToCanvasPos(event: TouchEvent | MouseEvent) {
         let x, y;
-        if (touch instanceof MouseEvent) {
-            x = touch.clientX;
-            y = touch.clientY;
+        if (event instanceof MouseEvent) {
+            x = event.clientX;
+            y = event.clientY;
         } else {
-            x = touch.touches[0].clientX;
-            y = touch.touches[0].clientY;
+            x = event.touches[0].clientX;
+            y = event.touches[0].clientY;
         }
         const rect = this.canvas.getBoundingClientRect();
         const cw = this.canvas.clientWidth;
