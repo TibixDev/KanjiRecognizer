@@ -86,7 +86,6 @@ export default class DrawingBoard {
     }
 
     touchToCanvasPos(touch: TouchEvent | MouseEvent) {
-        console.log("I am here")
         let x, y;
         if (touch instanceof MouseEvent) {
             x = touch.clientX;

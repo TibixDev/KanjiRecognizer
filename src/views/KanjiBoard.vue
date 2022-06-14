@@ -100,13 +100,6 @@ function undo() {
         predict();
     }
 }
-
-// I love Firefox
-for (const type of ['TouchEvent']) {
-    if (typeof window[type as any] === 'undefined') {
-        (window[type as any] as any) = () => {}
-    }
-}
 </script>
 
 <style scoped>
